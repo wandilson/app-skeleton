@@ -1,4 +1,4 @@
-#Introdução
+# Introdução
 Start desenvolvido em Laravel7 e Blade.
 Sua finalidade é agilizar o start de uma aplicação que tenha autenticação juntamente com autorização ACL.
 
@@ -15,4 +15,5 @@ Sua finalidade é agilizar o start de uma aplicação que tenha autenticação j
 - [X] Gerenciamento de Acl Roles/Permissions
 - [ ] Envio de e-mail ao ser cadastrado
 
+## Screenshot
 ![Screenshot](screenshot.png)
