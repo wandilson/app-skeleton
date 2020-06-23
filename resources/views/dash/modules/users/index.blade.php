@@ -24,6 +24,9 @@
 
 <div class="row">
     <div class="col-xl-8">
+        
+        @include('dash.modules.includes.alerts')
+
         <div class="card">
             <div class="card-header border-0">
                 <form class="form-inline">
@@ -56,28 +59,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">
-                                Wandilson Oliveira
-                            </th>
-                            <td>
-                                wandilson.oliver@gmail.com
-                            </td>
-                            <td>
-                                23/06/2020
-                            </td>
-                            <td>
-                                <a href="">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="" class="mr-2 ml-2">
-                                    <i class="fas fa-lock-open"></i>
-                                </a>
-                                <a href="">
-                                    <i class="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach ($users as $item)
+                            <tr>
+                                <th scope="row">
+                                    {{ $item->name }}
+                                </th>
+                                <td>
+                                    {{ $item->email }}
+                                </td>
+                                <td>
+                                    {{ $item->created_at }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('users.edit', $item->id) }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="" class="mr-2 ml-2">
+                                        <i class="fas fa-lock-open"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="far fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>

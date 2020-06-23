@@ -10,7 +10,7 @@
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('users') }}">Usuários</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Criar registro</li>
+                            <li class="breadcrumb-item active" aria-current="page">Atualizar registro</li>
                             </ol>
                         </nav>
                     </div>
@@ -29,7 +29,7 @@
             <div class="card-header border-0">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="mb-0">Cadastrar Usuário</h3>
+                        <h3 class="mb-0">Atualizar Usuário</h3>
                     </div>
                 </div>
             </div>
@@ -38,10 +38,11 @@
 				
 				@include('dash.modules.includes.alerts')
 
-				<form action="{{ route('users.store') }}" method="POST">
+				<form action="{{ route('users.update', $user->id) }}" method="POST">
 					
 					@include('dash.modules.users._partials.form')
-
+                    @method('PUT')
+                    
 					<div class="pl-lg-4">
 						<button type="submit" class="btn btn-success float-right">Salvar</button>
 					</div>

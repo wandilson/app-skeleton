@@ -25,7 +25,9 @@ Route::prefix('dash')->namespace('Dash')->group(function(){
 
     Route::get('/users', 'UsersController@index')->name('users');
     Route::get('/users/create', 'UsersController@create')->name('users.create');
-    Route::post('/users/store', 'UsersController@create')->name('users.store');
+    Route::post('/users/store', 'UsersController@store')->name('users.store');
+    Route::get('/users/{id}/edit', 'UsersController@edit')->name('users.edit');
+    Route::put('/users/{id}/update', 'UsersController@update')->name('users.update');
 
     Route::prefix('acl')->namespace('Acl')->group(function(){
         Route::get('/permissions', 'PermissionController@index')->name('permission');

@@ -3,39 +3,46 @@
 namespace App\Http\Controllers\Dash;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $repository;
+
+    public function __construct(User $user)
     {
-        return view('dash.modules.users.index');
+        $this->middleware('auth');
+        $this->repository = $user;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function index()
+    {
+        $users = $this->repository->all();
+        return view('dash.modules.users.index', ['users' => $users]);
+    }
+
+
     public function create()
     {
         return view('dash.modules.users.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->all();
+
+        $data['password'] = Hash::make($data['password']);
+
+        $this->repository->create($data);
+
+        return redirect()
+                    ->route('users')
+                    ->with('message', "Usuário: {$request->name}, cadastrado com sucesso!");
     }
 
     /**
@@ -49,27 +56,35 @@ class UsersController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        if(!$user = $this->repository->find($id))
+            return redirect()->route('notfound');
+
+        return view('dash.modules.users.edit', [
+            'user'  =>  $user
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(UserRequest $request, $id)
     {
-        //
+        if(!$user = $this->repository->find($id))
+            return redirect()->route('notfound');
+
+        $data = $request->all();
+        if(isset($data['password']) <> null){
+            $data['password'] = Hash::make($data['password']);
+        }else{
+            $data['password'] = $user['password'];
+        }
+
+        $user->update($data);
+
+        return redirect()
+                    ->route('users')
+                    ->with('message', "Usuário: {$request->name}, atualizado com sucesso!");
     }
 
     /**
