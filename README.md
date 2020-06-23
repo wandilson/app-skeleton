@@ -14,3 +14,5 @@ Sua finalidade é agilizar o start de uma aplicação que tenha autenticação j
 - [X] Gerenciamento de Usuário
 - [X] Gerenciamento de Acl Roles/Permissions
 - [ ] Envio de e-mail ao ser cadastrado
+
+![Screenshot](screenshot.png)
