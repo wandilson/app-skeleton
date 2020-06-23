@@ -21,7 +21,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = $this->repository->latest()->paginate(1);
+        $users = $this->repository->latest()->paginate();
         return view('dash.modules.users.index', ['users' => $users]);
     }
 
@@ -53,7 +53,12 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        if(!$user = $this->repository->find($id))
+            return redirect()->route('notfound');
+
+        return view('dash.modules.users.show', [
+            'user'  =>  $user
+        ]);
     }
 
 
@@ -87,15 +92,16 @@ class UsersController extends Controller
                     ->with('message', "Usuário: {$request->name}, atualizado com sucesso!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        if(!$user = $this->repository->find($id))
+            return redirect()->route('notfound');
+
+        $user->delete();
+
+        return redirect()
+                    ->route('users')
+                    ->with('message', "Usuário: {$user->name}, removido com sucesso!");
     }
 
     public function search(Request $request)

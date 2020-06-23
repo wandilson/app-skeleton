@@ -79,7 +79,7 @@
                                     <a href="" class="mr-2 ml-2">
                                         <i class="fas fa-lock-open"></i>
                                     </a>
-                                    <a href="">
+                                    <a href="{{ route('users.show', $item->id) }}">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 </td>
@@ -88,14 +88,6 @@
 
                     </tbody>
                 </table>
-            </div>
-
-            <div class="card-body">
-                @if($users == '')
-                    <div class="alert alert-warning" role="alert">
-                        Não encontramos registros!
-                    </div>
-               @endif
             </div>
 
             <div class="card-footer">

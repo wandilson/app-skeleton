@@ -51,7 +51,7 @@ class User extends Authenticatable
     public function search($filter = null)
     {
         $results = $this->where('name', 'LIKE', "%{$filter}%")
-                        ->paginate(1);
+                        ->paginate();
 
         return $results;
     }
