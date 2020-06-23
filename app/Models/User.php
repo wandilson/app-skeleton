@@ -44,4 +44,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Pesquisa usuário
+     */
+    public function search($filter = null)
+    {
+        $results = $this->where('name', 'LIKE', "%{$filter}%")
+                        ->paginate(1);
+
+        return $results;
+    }
 }

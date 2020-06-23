@@ -29,10 +29,11 @@
 
         <div class="card">
             <div class="card-header border-0">
-                <form class="form-inline">
+                <form action="{{ route('users.search') }}" class="form-inline" method="POST">
+                    @csrf
                     <div class="form-group mr-2 mb-2">
-                        <label for="search" class="sr-only">Password</label>
-                        <input type="search" class="form-control" id="search" placeholder="pesquisar">
+                        <label for="search" class="sr-only">Pesquisar:</label>
+                        <input name="filter" type="search" class="form-control" id="search" placeholder="pesquisar" value="{{ $filters['filter'] ?? '' }}">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
                 </form>
@@ -47,6 +48,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="table-responsive">
                 <!-- Projects table -->
                 <table class="table align-items-center table-flush">
@@ -88,8 +90,22 @@
                 </table>
             </div>
 
+            <div class="card-body">
+                @if($users == '')
+                    <div class="alert alert-warning" role="alert">
+                        Não encontramos registros!
+                    </div>
+               @endif
+            </div>
+
             <div class="card-footer">
-                dfas
+                <div class="float-right">
+                    @if (isset($filters))
+                        {!! $users->appends($filters)->links() !!}
+                    @else
+                        {!! $users->links() !!}
+                    @endif
+                </div>
             </div>
         </div>
     </div>

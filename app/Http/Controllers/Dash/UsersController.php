@@ -21,7 +21,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = $this->repository->all();
+        $users = $this->repository->latest()->paginate(1);
         return view('dash.modules.users.index', ['users' => $users]);
     }
 
@@ -96,5 +96,18 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        
+        $filters = $request->except('_token');
+
+        $users = $this->repository->search($request->filter);
+
+        return view('dash.modules.users.index', [
+            'users' => $users,
+            'filters' => $filters,
+        ]);
     }
 }
