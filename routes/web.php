@@ -37,6 +37,30 @@ Route::prefix('dash')->namespace('Dash')->group(function(){
     });
 
     Route::prefix('acl')->namespace('Acl')->group(function(){
-        Route::get('/permissions', 'PermissionController@index')->name('permission');
+        Route::prefix('roles')->group(function(){
+            Route::get('/', 'RolesController@index')->name('roles');
+
+            Route::get('/create', 'RolesController@create')->name('roles.create');
+            Route::post('/store', 'RolesController@store')->name('roles.store');
+            Route::get('/{id}/edit', 'RolesController@edit')->name('roles.edit');
+            Route::get('/{id}/show', 'RolesController@show')->name('roles.show');
+            Route::put('/{id}/update', 'RolesController@update')->name('roles.update');
+            Route::any('/search', 'RolesController@search')->name('roles.search');
+
+            Route::delete('/{id}/delete', 'RolesController@destroy')->name('roles.delete');
+        });
+
+        Route::prefix('permissions')->group(function(){
+            Route::get('/', 'PermissionController@index')->name('permissions');
+
+            Route::get('/create', 'PermissionController@create')->name('permissions.create');
+            Route::post('/store', 'PermissionController@store')->name('permissions.store');
+            Route::get('/{id}/edit', 'PermissionController@edit')->name('permissions.edit');
+            Route::get('/{id}/show', 'PermissionController@show')->name('permissions.show');
+            Route::put('/{id}/update', 'PermissionController@update')->name('permissions.update');
+            Route::any('/search', 'PermissionController@search')->name('permissions.search');
+
+            Route::delete('/{id}/delete', 'PermissionController@destroy')->name('permissions.delete');
+        });
     });
 });

@@ -24,13 +24,13 @@
 						</a>
 					</li>					
 					<li class="nav-item">
-						<a class="nav-link" href="examples/icons.html">
+						<a class="nav-link" href="{{ route('roles') }}">
 						<i class="ni ni-planet text-orange"></i>
 						<span class="nav-link-text">Funções</span>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="examples/login.html">
+						<a class="nav-link" href="{{ route('permissions') }}">
 						<i class="ni ni-key-25 text-info"></i>
 						<span class="nav-link-text">Permissões</span>
 						</a>

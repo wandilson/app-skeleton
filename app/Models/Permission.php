@@ -17,4 +17,15 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Pesquisa permissions
+     */
+    public function search($filter = null)
+    {
+        $results = $this->where('name', 'LIKE', "%{$filter}%")
+                        ->paginate();
+
+        return $results;
+    }
 }

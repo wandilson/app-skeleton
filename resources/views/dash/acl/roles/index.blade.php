@@ -9,8 +9,8 @@
                         <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('permissions') }}">Permissões</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Lista permissões</li>
+                            <li class="breadcrumb-item"><a href="{{ route('roles') }}">Funções</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Lista Dados</li>
                             </ol>
                         </nav>
                     </div>
@@ -29,7 +29,7 @@
 
         <div class="card">
             <div class="card-header border-0">
-                <form action="{{ route('permissions.search') }}" class="form-inline" method="POST">
+                <form action="{{ route('roles.search') }}" class="form-inline" method="POST">
                     @csrf
                     <div class="form-group mr-2 mb-2">
                         <label for="search" class="sr-only">Pesquisar:</label>
@@ -41,10 +41,10 @@
             <div class="card-header border-0">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="mb-0">Lista de Permissões</h3>
+                        <h3 class="mb-0">Lista de Funções</h3>
                     </div>
                     <div class="col text-right">
-                        <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">Novo</a>
+                        <a href="{{ route('roles.create') }}" class="btn btn-sm btn-primary">Novo</a>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($permissions as $item)
+                        @foreach ($roles as $item)
                             <tr>
                                 <th scope="row">
                                     {{ $item->name }}
@@ -69,10 +69,10 @@
                                     {{ $item->label }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('permissions.edit', $item->id) }}">
+                                    <a href="{{ route('roles.edit', $item->id) }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('permissions.show', $item->id) }}">
+                                    <a href="{{ route('roles.show', $item->id) }}">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 </td>
@@ -86,9 +86,9 @@
             <div class="card-footer">
                 <div class="float-right">
                     @if (isset($filters))
-                        {!! $permissions->appends($filters)->links() !!}
+                        {!! $roles->appends($filters)->links() !!}
                     @else
-                        {!! $permissions->links() !!}
+                        {!! $roles->links() !!}
                     @endif
                 </div>
             </div>

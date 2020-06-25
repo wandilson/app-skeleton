@@ -17,4 +17,15 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    /**
+     * Pesquisa roles
+     */
+    public function search($filter = null)
+    {
+        $results = $this->where('name', 'LIKE', "%{$filter}%")
+                        ->paginate();
+
+        return $results;
+    }
 }
