@@ -34,6 +34,11 @@ Route::prefix('dash')->namespace('Dash')->group(function(){
         Route::any('/search', 'UsersController@search')->name('users.search');
 
         Route::delete('/{id}/delete', 'UsersController@destroy')->name('users.delete');
+    
+        Route::get('/{id}/roles', 'Acl\UsersRolesController@index')->name('users.roles');
+        Route::get('/{id}/roles/available', 'Acl\UsersRolesController@rolesAvailable')->name('users.roles.available');
+        Route::get('/{id}/roles/{idRoles}/detach', 'Acl\UsersRolesController@rolesDetach')->name('users.roles.detach');
+        Route::post('/{id}/roles', 'Acl\UsersRolesController@rolesAttach')->name('users.roles.attach');
     });
 
     Route::prefix('acl')->namespace('Acl')->group(function(){

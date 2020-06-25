@@ -55,4 +55,18 @@ class User extends Authenticatable
 
         return $results;
     }
+
+    /**
+     * Lista funções disponíveis
+     */
+    public function rolesAvailable($filter = null)
+    {
+        $permissions = Role::whereNotIn('roles.id', function($query) {
+            $query->select('role_user.role_id');
+            $query->from('role_user');
+            $query->whereRaw("role_user.user_id={$this->id}");
+        });
+
+        return $permissions;
+    }
 }

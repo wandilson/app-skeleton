@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\App\Acl;
+namespace App\Http\Controllers\Dash\Acl;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -24,8 +24,6 @@ class UsersRolesController extends Controller
      */
     public function index($idUser)
     {
-        if( Gate::denies('user_roles'))
-            return redirect()->route('unauthorized');
 
         $user = $this->user->find($idUser);
 
@@ -35,7 +33,7 @@ class UsersRolesController extends Controller
 
         $roles = $user->roles()->with('permissions')->get();
 
-        return view('app.users.roles.index',[
+        return view('dash.modules.users.roles.index',[
             'user'           =>      $user,
             'roles'          =>      $roles
         ]);
@@ -43,16 +41,13 @@ class UsersRolesController extends Controller
 
     public function rolesAvailable($idUser)
     {
-        if( Gate::denies('user_roles'))
-            return redirect()->route('unauthorized');
-
         if (!$user = $this->user->find($idUser)) {
             return redirect()->route('notfound');
         }
 
         $roles = $user->rolesAvailable()->get();
         
-        return view('app.users.roles.all_roles',[
+        return view('dash.modules.users.roles.all_roles',[
             'role'          =>      $roles,
             'user'          =>      $user
         ]);
@@ -64,9 +59,6 @@ class UsersRolesController extends Controller
      */
     public function rolesDetach($idUser, $idRoles)
     {
-        if( Gate::denies('user_roles'))
-            return redirect()->route('unauthorized');
-
         $user = $this->user->find($idUser);
         $role = $this->role->find($idRoles);
 
@@ -85,9 +77,6 @@ class UsersRolesController extends Controller
      */
     public function rolesAttach(Request $request, $idUser)
     {
-        if( Gate::denies('user_roles'))
-            return redirect()->route('unauthorized');
-            
         if (!$user = $this->user->find($idUser)) {
             return redirect()->route('notfound');
         }
