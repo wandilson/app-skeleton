@@ -19,7 +19,10 @@ class AclSeeder extends Seeder
             [ 'name'  =>  'user_edit',      'label' =>  'Libera a opção de editar registro do usuários'],
             [ 'name'  =>  'user_show',      'label' =>  'Visualiza todos os dados do usuário'],
             [ 'name'  =>  'user_delete',    'label' =>  'Libera opção de deletar o usuário'],
-            [ 'name'  =>  'user_roles',     'label' =>  'Disponibiliza a opção de add funções ao usuário']
+            [ 'name'  =>  'user_roles',     'label' =>  'Disponibiliza a opção de add funções ao usuário'],
+
+            [ 'name'  =>  'acl_roles',          'label' =>  'Libera permissão para que o usuário possa cadastrar novas funções e add permissões']
+
         ];
 
         Permission::insert($permissions);

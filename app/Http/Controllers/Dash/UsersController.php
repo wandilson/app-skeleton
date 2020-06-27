@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -21,6 +22,9 @@ class UsersController extends Controller
 
     public function index()
     {
+        if( Gate::denies('user_view'))
+            return redirect()->route('unauthorized');
+
         $users = $this->repository->latest()->paginate();
         return view('dash.modules.users.index', ['users' => $users]);
     }
@@ -28,12 +32,18 @@ class UsersController extends Controller
 
     public function create()
     {
+        if( Gate::denies('user_create'))
+            return redirect()->route('unauthorized');
+
         return view('dash.modules.users.create');
     }
 
 
     public function store(UserRequest $request)
     {
+        if( Gate::denies('user_create'))
+            return redirect()->route('unauthorized');
+
         $data = $request->all();
 
         $data['password'] = Hash::make($data['password']);
@@ -53,6 +63,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        if( Gate::denies('user_show'))
+            return redirect()->route('unauthorized');
+
         if(!$user = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -64,6 +77,9 @@ class UsersController extends Controller
 
     public function edit($id)
     {
+        if( Gate::denies('user_edit'))
+            return redirect()->route('unauthorized');
+
         if(!$user = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -75,6 +91,9 @@ class UsersController extends Controller
 
     public function update(UserRequest $request, $id)
     {
+        if( Gate::denies('user_edit'))
+            return redirect()->route('unauthorized');
+
         if(!$user = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -94,6 +113,9 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
+        if( Gate::denies('user_delete'))
+            return redirect()->route('unauthorized');
+
         if(!$user = $this->repository->find($id))
             return redirect()->route('notfound');
 

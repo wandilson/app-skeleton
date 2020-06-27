@@ -67,14 +67,25 @@
                                 </th>
                                 <td>
                                     {{ $item->label }}
+                                    <div class="mt-3">
+										@foreach ($item->permissions as $itemPerm)											
+											<span class="badge badge-info" data-toggle="tooltip" data-original-title="{{ $itemPerm->label }}">{{ $itemPerm->name }}</span>
+										@endforeach
+									</div>
                                 </td>
                                 <td>
-                                    <a href="{{ route('roles.edit', $item->id) }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('roles.show', $item->id) }}">
-                                        <i class="far fa-eye"></i>
-                                    </a>
+                                    @if ($item->name <> 'Desenvolvedor')
+                                        <a href="{{ route('roles.edit', $item->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('roles.permissions', $item->id) }}" class="mr-2 ml-2">
+                                            <i class="fas fa-lock-open"></i>
+                                        </a>
+                                        <a href="{{ route('roles.show', $item->id) }}">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    @endif
+                                    
                                 </td>
                             </tr>
                         @endforeach

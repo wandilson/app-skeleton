@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
@@ -20,18 +21,27 @@ class RolesController extends Controller
 
     public function index()
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         $roles = $this->repository->latest()->paginate();
         return view('dash.acl.roles.index', ['roles' => $roles]);
     }
 
     public function create()
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         return view('dash.acl.roles.create');
     }
 
 
     public function store(RoleRequest $request)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         $data = $request->all();
         $this->repository->create($data);
 
@@ -42,6 +52,9 @@ class RolesController extends Controller
 
     public function show($id)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if(!$role = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -53,6 +66,9 @@ class RolesController extends Controller
 
     public function edit($id)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if(!$role = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -64,6 +80,9 @@ class RolesController extends Controller
 
     public function update(RoleRequest $request, $id)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if(!$role = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -77,6 +96,9 @@ class RolesController extends Controller
 
     public function destroy($id)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if(!$role = $this->repository->find($id))
             return redirect()->route('notfound');
 
@@ -89,7 +111,9 @@ class RolesController extends Controller
 
     public function search(Request $request)
     {
-        
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         $filters = $request->except('_token');
 
         $roles = $this->repository->search($request->filter);

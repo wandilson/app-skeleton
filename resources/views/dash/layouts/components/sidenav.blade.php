@@ -17,24 +17,33 @@
 							<span class="nav-link-text">Dashboard</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('users') }}">
-						<i class="ni ni-single-02 text-yellow"></i>
-						<span class="nav-link-text">Usuários</span>
-						</a>
-					</li>					
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('roles') }}">
-						<i class="ni ni-planet text-orange"></i>
-						<span class="nav-link-text">Funções</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('permissions') }}">
-						<i class="ni ni-key-25 text-info"></i>
-						<span class="nav-link-text">Permissões</span>
-						</a>
-					</li>
+					@can('user_view')
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('users') }}">
+							<i class="ni ni-single-02 text-yellow"></i>
+							<span class="nav-link-text">Usuários</span>
+							</a>
+						</li>
+					@endcan
+					
+					@can('acl_roles')
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('roles') }}">
+							<i class="ni ni-planet text-orange"></i>
+							<span class="nav-link-text">Funções</span>
+							</a>
+						</li>
+					@endcan
+					@can('acl_permissions')
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('permissions') }}">
+							<i class="ni ni-key-25 text-info"></i>
+							<span class="nav-link-text">Permissões</span>
+							</a>
+						</li>
+					@endcan
+
+					
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">

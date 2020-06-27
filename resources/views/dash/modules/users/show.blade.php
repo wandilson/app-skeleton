@@ -33,12 +33,17 @@
                 <h1>{{ $user->name }}</h1>
                 <h4>{{ $user->email }}</h4>
                 <h4>Dta Cadastro: {{ $user->created_at }}</h4>
-                <hr>
-                <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Deseja realmente remover esse registro?');">
-                    @csrf
-					@method('DELETE')
-                    <button type="submit" class="btn btn-danger">Remover usuário</button>
-                </form>
+                
+
+                @can('user_delete', Model::class)
+                    <hr>
+                    <form action="{{ route('users.delete', $user->id) }}" method="POST" onsubmit="return confirm('Deseja realmente remover esse registro?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Remover usuário</button>
+                    </form>
+                @endcan
+
             </div>
         </div>
 

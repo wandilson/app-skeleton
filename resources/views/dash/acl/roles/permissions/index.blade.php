@@ -9,8 +9,8 @@
                         <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('users') }}">Usuários</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Funções do usuário</li>
+                            <li class="breadcrumb-item"><a href="{{ route('roles') }}">Funções</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Lista permissões da função</li>
                             </ol>
                         </nav>
                     </div>
@@ -31,10 +31,10 @@
             <div class="card-header border-0">
                 <div class="row align-items-center">
                     <div class="col">
-						<h3 class="mb-0">Funções do usuário: {{ $user->name }}</h3>
+                        <h3 class="mb-0">Permissões para função: {{ $role->name }}</h3>
                     </div>
                     <div class="col text-right">
-                        <a href="{{ route('users.roles.available', $user->id) }}" class="btn btn-sm btn-primary">Novo</a>
+                        <a href="{{ route('roles.permissions.available', $role->id) }}" class="btn btn-sm btn-primary">Novo</a>
                     </div>
                 </div>
             </div>
@@ -50,21 +50,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($roles as $item)
+                        @foreach ($permissions as $item)
                             <tr>
                                 <th scope="row">
                                     {{ $item->name }}
                                 </th>
                                 <td>
                                     {{ $item->label }}
-                                    <div class="mt-3">
-										@foreach ($item->permissions as $itemPerm)											
-											<span class="badge badge-info" data-toggle="tooltip" data-original-title="{{ $itemPerm->label }}">{{ $itemPerm->name }}</span>
-										@endforeach
-									</div>
                                 </td>
                                 <td>
-                                    <a href="{{ route('users.roles.detach', [$user->id, $item->id]) }}" class="mr-2 ml-2">
+                                    <a href="{{ route('roles.permissions.detach', [$role->id, $item->id]) }}" class="mr-2 ml-2">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>

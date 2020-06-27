@@ -8,6 +8,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/app/unauthorized', function(){
+    return view('dash.modules.includes.unauthorized');
+})->name('unauthorized');
+Route::get('/app/notfound', function(){
+    return view('dash.modules.includes.notfound');
+})->name('notfound');
+
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social.callback');
 
@@ -53,6 +60,19 @@ Route::prefix('dash')->namespace('Dash')->group(function(){
             Route::any('/search', 'RolesController@search')->name('roles.search');
 
             Route::delete('/{id}/delete', 'RolesController@destroy')->name('roles.delete');
+
+            /**
+             * 1. Lista permissões da função
+             * 2. Lista permissões disponiveis para função
+             * 3. Remover permissão da função
+             * 4. Add permissão ao função
+             */
+            Route::get('/{id}/permissions', 'RolesPermissionsController@index')->name('roles.permissions');
+            Route::get('/{id}/permissions/available', 'RolesPermissionsController@permissionsAvailable')->name('roles.permissions.available');
+            Route::get('/{id}/permissions/{idPermission}/detach', 'RolesPermissionsController@permissionsDetach')->name('roles.permissions.detach');
+            Route::post('/{id}/permissions', 'RolesPermissionsController@permissionsAttach')->name('roles.permissions.attach');
+
+
         });
 
         Route::prefix('permissions')->group(function(){

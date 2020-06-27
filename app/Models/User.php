@@ -69,4 +69,22 @@ class User extends Authenticatable
 
         return $permissions;
     }
+
+
+    /**
+     * ACL
+     */
+    public function hasPermission(Permission $permission)
+    {
+        return $this->hasAnyRoles($permission->roles);
+    }
+
+    public function hasAnyRoles($roles)
+    {
+        if(is_array($roles) || is_object($roles)){
+            return !! $roles->intersect($this->roles)->count();
+        }
+
+        return $this->roles->contains('name', $roles);
+    }
 }

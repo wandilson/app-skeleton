@@ -43,9 +43,11 @@
                     <div class="col">
                         <h3 class="mb-0">Lista de Usuários</h3>
                     </div>
-                    <div class="col text-right">
-                        <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary">Novo</a>
-                    </div>
+                    @can('user_create', Model::class)
+                        <div class="col text-right">
+                            <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary">Novo</a>
+                        </div>
+                    @endcan
                 </div>
             </div>
 
@@ -73,15 +75,25 @@
                                     {{ $item->created_at }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('users.edit', $item->id) }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('users.roles', $item->id) }}" class="mr-2 ml-2">
-                                        <i class="fas fa-lock-open"></i>
-                                    </a>
-                                    <a href="{{ route('users.show', $item->id) }}">
-                                        <i class="far fa-eye"></i>
-                                    </a>
+                                    @can('user_edit', Model::class)
+                                        <a href="{{ route('users.edit', $item->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endcan
+
+                                    @can('user_roles', Model::class)
+                                        <a href="{{ route('users.roles', $item->id) }}" class="mr-2 ml-2">
+                                            <i class="fas fa-lock-open"></i>
+                                        </a>
+                                    @endcan
+
+                                    @can('user_show', Model::class)
+                                        <a href="{{ route('users.show', $item->id) }}">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    @endcan
+
+                                    
                                 </td>
                             </tr>
                         @endforeach

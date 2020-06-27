@@ -10,7 +10,7 @@
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
 							<li class="breadcrumb-item"><a href="{{ route('users') }}">Usuários</a></li>
-							<li class="breadcrumb-item"><a href="{{ route('users.roles', $user->id ) }}">{{ $user->name }}</a></li>
+							<li class="breadcrumb-item"><a href="{{ route('users.roles', $role->id ) }}">{{ $role->name }}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Funções disponíveis</li>
                             </ol>
                         </nav>
@@ -31,13 +31,13 @@
 				<div class="card-header border-0">
 					<div class="row align-items-center">
 						<div class="col">
-							<h3 class="mb-0">Disponível para: {{ $user->name }}</h3>
+							<h3 class="mb-0">Disponível para: {{ $role->name }}</h3>
 						</div>
 					</div>
 				</div>
 
 				<div class="table-responsive">
-					<form action="{{ route('users.roles.attach', $user->id) }}" method="POST">
+					<form action="{{ route('roles.permissions.attach', $role->id) }}" method="POST">
 
 						<table class="table align-items-center table-flush table-striped mb-4">
 							<thead class="thead-light">
@@ -51,11 +51,11 @@
 								
 									@csrf
 
-									@foreach ($role as $item)
+									@foreach ($permissions as $item)
 										<tr>
 											<th>
 												<div class="form-group form-check">
-													<input type="checkbox" class="form-check-input" name="roles[]" value="{{ $item->id }}">
+													<input type="checkbox" class="form-check-input" name="permissions[]" value="{{ $item->id }}">
 												</div>
 											</th>
 											<td class="table-user">
@@ -63,11 +63,6 @@
 											</td>
 											<td>
 												<span class="text-muted">{{ $item->label }}</span>
-												<div class="">
-													@foreach ($item->permissions as $itemPerm)											
-														<span class="badge badge-info" data-toggle="tooltip" data-original-title="{{ $itemPerm->label }}">{{ $itemPerm->name }}</span>
-													@endforeach
-												</div>
 											</td>
 										</tr>
 									@endforeach
@@ -77,8 +72,6 @@
 								
 							</tbody>
 						</table>
-
-						@include('dash.modules.includes.alerts')
 						
 						<div class="card-footer mb-4">
 							<button type="submit" class="btn btn-success float-right">Vincular Selecionadas</button>

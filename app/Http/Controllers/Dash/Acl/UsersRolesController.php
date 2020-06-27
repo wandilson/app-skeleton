@@ -24,6 +24,8 @@ class UsersRolesController extends Controller
      */
     public function index($idUser)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
 
         $user = $this->user->find($idUser);
 
@@ -41,6 +43,9 @@ class UsersRolesController extends Controller
 
     public function rolesAvailable($idUser)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if (!$user = $this->user->find($idUser)) {
             return redirect()->route('notfound');
         }
@@ -59,6 +64,9 @@ class UsersRolesController extends Controller
      */
     public function rolesDetach($idUser, $idRoles)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         $user = $this->user->find($idUser);
         $role = $this->role->find($idRoles);
 
@@ -77,6 +85,9 @@ class UsersRolesController extends Controller
      */
     public function rolesAttach(Request $request, $idUser)
     {
+        if( Gate::denies('acl_roles'))
+            return redirect()->route('unauthorized');
+
         if (!$user = $this->user->find($idUser)) {
             return redirect()->route('notfound');
         }
